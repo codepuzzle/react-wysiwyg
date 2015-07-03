@@ -112,13 +112,13 @@ var ContentEditable = React.createClass({
 
   setPlaceholder: function(text){
     if (!text.trim().length && this.props.placeholder) {
-      React.findDOMNode(this).textContent = this.props.placeholder;
+      React.findDOMNode(this).innerText = this.props.placeholder;
       this.setCursorToStart();
     }
   },
 
   unsetPlaceholder: function(){
-    React.findDOMNode(this).textContent = '';
+    React.findDOMNode(this).innerText = '';
   },
 
   setCursorToStart: function(){
@@ -154,7 +154,7 @@ var ContentEditable = React.createClass({
       var saveOnEnterKey = this.props.saveOnEnterKey || false;
 
       if(saveOnEnterKey && keyCode === 13){
-        var text = e.target.textContent;
+        var text = e.target.innerText;
         this.props.onEnterKey(text);
         return;
       }
@@ -223,7 +223,7 @@ var ContentEditable = React.createClass({
   },
 
   onKeyPress: function(e){
-    var val = e.target.textContent;
+    var val = e.target.innerText;
 
     // max-length validation on the fly
     if (this.props.maxLength && (val.length > this.props.maxLength)) {
@@ -241,15 +241,15 @@ var ContentEditable = React.createClass({
     // support the 'input' event on contenteditable. Definitely
     // not ideal, but it seems to work for now.
     if (!stop && !this._ignoreKeyup) {
-      this.setText(e.target.textContent);
+      this.setText(e.target.innerText);
     }
 
-    this.setPlaceholder(e.target.textContent);
+    this.setPlaceholder(e.target.innerText);
   },
 
   onInput: function(e) {
     this._ignoreKeyup = true;
-    this.setText(e.target.textContent);
+    this.setText(e.target.innerText);
   },
 
   setText: function(val) {
